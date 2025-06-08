@@ -26,6 +26,25 @@ app.post("/login",(req,res)=>{
 
 })
 
-app.listen(4000, () => {
-    console.log('app is listening for port 4000')
+app.post("/save", verifyToken, (req,res)=> {
+
 })
+
+function verifyToken(req, res, next) {
+
+    if (typeof(req.headers['authorization']) != 'undefined' && 
+
+    var headerToken = req.headers['authorization'].split(' ')[1];
+    if (headerToken !== 'undefined') {
+        req.token = headerToken;
+        next();
+
+    } else {
+        res.json({msg:"Unauthorized Request"})
+    }
+
+}
+
+app.listen(4000, () => {
+    console.log("app is listening for port 4000")
+})    
