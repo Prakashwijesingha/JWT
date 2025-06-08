@@ -28,11 +28,19 @@ app.post("/login",(req,res)=>{
 
 app.post("/save", verifyToken, (req,res)=> {
 
+    jwt.verify(req.token,"secreatkey",(err,data)=> {
+        if(err) {
+            res.json({msg:"Access denied"})
+        } else {
+            res.json({msg:"Data saved", data:data})
+        }
+     })
+
 })
 
 function verifyToken(req, res, next) {
 
-    if (typeof(req.headers['authorization']) != 'undefined' && 
+    if (typeof(req.headers['authorization']) != 'undefined' && req.headers['authorization'] != 'undefined') {
 
     var headerToken = req.headers['authorization'].split(' ')[1];
     if (headerToken !== 'undefined') {
@@ -41,6 +49,8 @@ function verifyToken(req, res, next) {
 
     } else {
         res.json({msg:"Unauthorized Request"})
+    }
+    
     }
 
 }
