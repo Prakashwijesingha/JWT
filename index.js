@@ -10,10 +10,8 @@ app.get('/', (req, res) => {
 
 app.post("/login",(req,res)=>{
 
-    //request -->database-->true
-    //generate token
-    //sing userdata
-    var user = { id:1,username:"prakash",age:23};
+   
+    const userdata = { id: 1, username: req.body?.username || "prakash", age: 23 };
 
     jwt.sign( {user:userdata},"secretkey",(err,token) => {
         if(err) {
@@ -57,4 +55,4 @@ function verifyToken(req, res, next) {
 
 app.listen(4000, () => {
     console.log("app is listening for port 4000")
-})    
+}) 
